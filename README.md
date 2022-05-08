@@ -30,4 +30,9 @@ The smart contract uses ERC721A - for extreme cheap transactions
 
 The UI is not complete, it's just made for functionality
 
+Here is a live version on Vercel 
+https://erc-721-and-merkle-proof-with-user-feedback-for-errors.vercel.app/
+
+
+
 

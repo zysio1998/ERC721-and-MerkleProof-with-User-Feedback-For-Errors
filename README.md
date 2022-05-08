@@ -18,6 +18,11 @@ _MAXPUBLICTX: 5
 
 This sets the amount of transactions at a time you allow. e.g 5 mints at a time
 
+Then set the Merkle Root
+e.g 0x0854a5116dc1f009a0c2b93223512f108d19d5f300af691ed6c3c6dec69ad803
+The add the Base URI including a backslash
+e.g https://ipfs.io/ipfs/QmaYsLRXHahhBzSP4DFRNacWcCgJug32KnmfH8rNLn9ArW/
+
 This dapp contains
 
 User feedback from the Solidity Smart Contract, revert reason

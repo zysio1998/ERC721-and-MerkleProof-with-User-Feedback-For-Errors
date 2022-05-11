@@ -8,8 +8,8 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "./ERC721A.sol";
 
 contract MainTesting is ERC721A, Ownable {
-    uint256 public immutable MAX_SUPPLY = 1000; 
-    uint256 public constant PRICE = 0.05 ether;
+    uint256 public maxSupply = 1000; 
+    uint256 public price = 0.05 ether;
     uint256 public maxPresale = 10;
     uint256 public maxPublic = 10; //max total for public mint
     uint256 public maxPublicTx; //max per tx public mint   
@@ -42,12 +42,20 @@ contract MainTesting is ERC721A, Ownable {
     }
 
     //set variables
-    function setActive(bool isActive) external onlyOwner {
+    function setPublicActive(bool isActive) external onlyOwner {
         _isActive = isActive;
     }
 
-    function presaleActive(bool isActive) external onlyOwner {
+    function setPresaleActive(bool isActive) external onlyOwner {
         _presaleActive = isActive;
+    }
+
+    function setMaxSupply(uint256 _newmaxSupply) public onlyOwner {
+        maxSupply = _newmaxSupply;
+    }
+
+    function setNewPrice(uint256 _newPrice) public onlyOwner {
+        price = _newPrice;
     }
 
     function setMaxPresale(uint256 _maxPresale) external onlyOwner {
@@ -60,9 +68,7 @@ contract MainTesting is ERC721A, Ownable {
 
     function setPreSaleRoot(bytes32 _root) external onlyOwner {
         preSaleRoot = _root;
-    }    
-
-    
+    }        
 
     function setBaseURI(string calldata baseURI) external onlyOwner {
         _baseTokenURI = baseURI;
@@ -78,29 +84,17 @@ contract MainTesting is ERC721A, Ownable {
         payable
         callerIsUser        
     {
-        require(_presaleActive, "Pre mint is not active");
-        require(
-            _preSaleListCounter[msg.sender] + quantity <= maxPresale,
-            "Exceeded max available to purchase"
-        );
+        require(_presaleActive, "Whitelist mint is not active yet");
+        require(_preSaleListCounter[msg.sender] + quantity <= maxPresale, "Exceeded max available to purchase at a time");
         require(quantity > 0, "Must mint more than 0 tokens");
-        require(
-            totalSupply() + quantity <= MAX_SUPPLY,
-            "Purchase would exceed max supply of Tokens"
-        );
-        require(PRICE * quantity >= msg.value, "Incorrect funds");
-
+        require(totalSupply() + quantity <= maxSupply, "No more NFTs left");
+        require(price * quantity >= msg.value, "Incorrect funds");
         // check proof & mint
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
-        require(
-            MerkleProof.verify(_merkleProof, preSaleRoot, leaf) ||
-                allowList[msg.sender],
-            "Invalid MerkleProof"
-        );
+        require(MerkleProof.verify(_merkleProof, preSaleRoot, leaf) || allowList[msg.sender], "Invalid MerkleProof");
+
         _safeMint(msg.sender, quantity);
-        _preSaleListCounter[msg.sender] =
-            _preSaleListCounter[msg.sender] +
-            quantity;
+        _preSaleListCounter[msg.sender] = _preSaleListCounter[msg.sender] + quantity;
     }
 
     function addToPreSaleOverflow(address[] calldata addresses)
@@ -124,15 +118,12 @@ contract MainTesting is ERC721A, Ownable {
         payable        
         callerIsUser
     {
-        require(quantity > 0, "Must mint more than 0 tokens");
-        require(_isActive, "public sale has not begun yet");
-        require(PRICE * quantity >= msg.value, "Incorrect funds");
-        require(quantity <= maxPublicTx, "exceeds max per transaction");
-        require(
-            _publicCounter[msg.sender] + quantity <= maxPublic,
-            "exceeds max per address"
-        );
-        require(totalSupply() + quantity <= MAX_SUPPLY, "reached max supply");
+        require(quantity > 0, "Must mint more than 0 tokens at a time");
+        require(_isActive, "Public mint has not begun yet");
+        require(price * quantity >= msg.value, "Incorrect funds");
+        require(quantity <= maxPublicTx, "Exceeds max per transaction");
+        require(_publicCounter[msg.sender] + quantity <= maxPublic, "Exceeds max per address");
+        require(totalSupply() + quantity <= maxSupply, "No more NFTs left");
 
         _safeMint(msg.sender, quantity);
         _publicCounter[msg.sender] = _publicCounter[msg.sender] + quantity;

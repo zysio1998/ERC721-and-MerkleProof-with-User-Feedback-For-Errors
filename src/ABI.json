@@ -117,36 +117,6 @@
       "inputs": [
         
       ],
-      "name": "MAX_SUPPLY",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        
-      ],
-      "name": "PRICE",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        
-      ],
       "name": "_isActive",
       "outputs": [
         {
@@ -389,6 +359,21 @@
     },
     {
       "inputs": [
+        
+      ],
+      "name": "maxSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
           "internalType": "uint8",
           "name": "quantity",
@@ -488,17 +473,17 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "bool",
-          "name": "isActive",
-          "type": "bool"
-        }
-      ],
-      "name": "presaleActive",
-      "outputs": [
         
       ],
-      "stateMutability": "nonpayable",
+      "name": "price",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -585,21 +570,6 @@
     {
       "inputs": [
         {
-          "internalType": "bool",
-          "name": "isActive",
-          "type": "bool"
-        }
-      ],
-      "name": "setActive",
-      "outputs": [
-        
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "operator",
           "type": "address"
@@ -665,12 +635,72 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "_newmaxSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxSupply",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_newPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "setNewPrice",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes32",
           "name": "_root",
           "type": "bytes32"
         }
       ],
       "name": "setPreSaleRoot",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "name": "setPresaleActive",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "name": "setPublicActive",
       "outputs": [
         
       ],

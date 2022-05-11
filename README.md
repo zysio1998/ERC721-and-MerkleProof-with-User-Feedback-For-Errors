@@ -1,29 +1,33 @@
-1. git clone the repo
-2. cd into the repo
-3. yarn install - to install all packages
-4. yarn start - to start the dapp on localhost
+1. git clone 
+2. cd into file
+3. yarn install
+4. yarn start
+5. yarn build
+6. deploy on vercel or wherever
 
-Contract etherscan - https://rinkeby.etherscan.io/address/0x7b064d73a353fab811444B7e179f8B7469AB3989
+Links to all
 
-There is a lot of failed transactions as I was developing the user feedback for the failed transactions
+1. link to etherscan - https://rinkeby.etherscan.io/address/0xA098f9aC53cB8e919D31aF700667fc54d8E0407F
+2. link to dapp - https://erc-721-and-merkle-proof-with-user-feedback-for-errors.vercel.app/
 
-To start the smart contract
+To change this to suit a specific project
 
-setActive - True -- for the public mint
-setpresale - True -- for only whitelist mints
+1. Create a contract on remix and deploy it and set the max per transaction allowed for public. AMOUNTFORTEAM and _MAXPUBLICTX. They must match
+2. Verify the Contract
+3. Change the contract address in the dapp
+4. Change the ABI in the ABI.json file
 
-When creating the contract through remix, set the two below to be the same value e.g
-AMOUNTFORTEAM: 5
-_MAXPUBLICTX: 5
+5. Generate the merkle root and setMerkleRoot
+6. setBaseURi
+7. set the public or presale active when needed
 
-This sets the amount of transactions at a time you allow. e.g 5 mints at a time
+to get a new merkle root you need to run node merkle_tree.js on the backend server https://glitch.com/edit/#!/scarce-guttural-museum
 
 Then set the Merkle Root
 e.g 0x0854a5116dc1f009a0c2b93223512f108d19d5f300af691ed6c3c6dec69ad803
 The add the Base URI including a backslash
 e.g https://ipfs.io/ipfs/QmaYsLRXHahhBzSP4DFRNacWcCgJug32KnmfH8rNLn9ArW/
 
-This dapp contains
 
 User feedback from the Solidity Smart Contract, revert reason
 Change the error messages to whatever you have in the contract
@@ -36,9 +40,6 @@ The smart contract uses ERC721A - for extreme cheap transactions
 The UI is not complete, it's just made for functionality
 
 The DAPP prompts a network switch if the user is on the wrong network
-
-Here is a live version on Vercel 
-https://erc-721-and-merkle-proof-with-user-feedback-for-errors.vercel.app/
 
 
 

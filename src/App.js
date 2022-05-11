@@ -10,7 +10,7 @@ import { wait } from "@testing-library/user-event/dist/utils";
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3("https://eth-rinkeby.alchemyapi.io/v2/4V5OB61hmIw0_boKEQYbpJBg8QyR-lWf"); 
 
-const contractAddress = "0x7b064d73a353fab811444B7e179f8B7469AB3989" 
+const contractAddress = "0xA098f9aC53cB8e919D31aF700667fc54d8E0407F" 
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -233,7 +233,7 @@ const App = () => {
         console.log("Working ok", pullCall)
       }catch (error){
         console.log("error is from long stuff here:" ,error)   
-        if(error == "Error: Returned error: execution reverted: Pre mint is not active"){
+        if(error == "Error: Returned error: execution reverted: Whitelist mint is not active yet"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
@@ -247,7 +247,7 @@ const App = () => {
             text: 'Can not mint more than 1 on the whitelist',
            
           })
-        }else if(error == "Error: Returned error: execution reverted: Exceeded max available to purchase"){
+        }else if(error == "Error: Returned error: execution reverted: Exceeded max available to purchase at a time"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
@@ -261,7 +261,7 @@ const App = () => {
             text: 'You must mint more than 1 NFT',
            
           })
-        }else if(error == "Error: Returned error: execution reverted: Purchase would exceed max supply of Tokens"){
+        }else if(error == "Error: Returned error: execution reverted: No more NFTs left"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
@@ -286,7 +286,7 @@ const App = () => {
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
-            text: e.data,
+            text: 'Please try again',
            
           })   
         }       
@@ -371,8 +371,13 @@ async function askContractToMintNft(quantity) {
         }           
       }
       else {
-          console.log("Wrong network - Connect to configured chain ID first!")
+          console.log("Wrong network - Connect to configured chain ID first!")          
           setloading(false)
+          Swal.fire(
+            'Connect wallet',
+            'Before minting you must connect your wallet',
+            'question'
+          )
       }    
   } catch (e) {      
       console.log("Error Caught in Catch Statement: ", e)  
@@ -407,14 +412,14 @@ async function askContractToMintNft(quantity) {
         console.log("Working ok", pullCall)
       }catch (error){
         console.log("error is from long stuff here:" ,error)   
-        if(error == "Error: Returned error: execution reverted: public sale has not begun yet"){
+        if(error == "Error: Returned error: execution reverted: Public mint has not begun yet"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
             text: 'Public mint has not started yet',
            
           })          
-        }else if(error == "Error: Returned error: execution reverted: exceeds max per transaction"){
+        }else if(error == "Error: Returned error: execution reverted: Exceeds max per transaction"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
@@ -428,21 +433,21 @@ async function askContractToMintNft(quantity) {
             text: 'Incorrect amount of ETH',
            
           })
-        }else if(error == "Error: Returned error: execution reverted: exceeds max per address"){
+        }else if(error == "Error: Returned error: execution reverted: Exceeds max per address"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
             text: 'Can not mint more then 3 on the public mint',
            
           })
-        }else if(error == "Error: Returned error: execution reverted: Must mint more than 0 tokens"){
+        }else if(error == "Error: Returned error: execution reverted: Must mint more than 0 tokens at a time"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
             text: 'You must mint more than 1 NFT',
            
           })
-        }else if(error == "Error: Returned error: execution reverted: reached max supply"){
+        }else if(error == "Error: Returned error: execution reverted: No more NFTs left"){
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
@@ -453,7 +458,7 @@ async function askContractToMintNft(quantity) {
           Swal.fire({
             icon: 'error',
             title: 'Minting Failed',
-            text: e.data,
+            text: 'Please try again',
            
           })   
         }       
@@ -506,9 +511,10 @@ async function askContractToMintNft(quantity) {
           </div>
         </div>
         <div className="container">
+          <h1 class="arek">ERC721 and MerkleProof with User Feedback For Errors </h1>            
+          <p class="arek">Error checking with feedback and only allowed to mint the when public or presale is active and only if you are whitelisted</p>    
           <div className="row body">
-            <div className="col-md-6 tesboddy ff">              
-              
+            <div className="col-md-6 tesboddy ff">  
               <div className=" mint_div ">
                 <button onClick={askContractToMintNftWhitelist} className="cta-button connect-wallet-button">                
                   Mint NFT WHITELIST only 1

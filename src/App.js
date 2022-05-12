@@ -511,7 +511,7 @@ async function askContractToMintNft(quantity) {
           </div>
         </div>
         <div className="container">
-          <h1 class="arek">ERC721 and MerkleProof with User Feedback For Errors </h1>            
+          <h1 class="arek">ERC721A and MerkleProof with User Feedback For Errors </h1>            
           <p class="arek">Error checking with feedback and only allowed to mint the when public or presale is active and only if you are whitelisted</p>    
           <div className="row body">
             <div className="col-md-6 tesboddy ff">  
